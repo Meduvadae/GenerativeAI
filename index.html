@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The World of Generative AI: An Interactive Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F7F4;
+            color: #2c3e50;
+        }
+        .nav-link {
+            transition: color 0.3s ease, border-bottom-color 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #e77f67;
+            border-bottom-color: #e77f67;
+        }
+        .section-card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
+        }
+        .tab-button {
+            transition: all 0.3s ease;
+        }
+        .tab-button.active {
+            background-color: #3498db;
+            color: #ffffff;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 40vh;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 300px;
+                max-height: 50vh;
+            }
+        }
+        .flip-card { perspective: 1000px; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; }
+        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1rem; border-radius: 0.75rem; }
+        .flip-card-back { transform: rotateY(180deg); }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-md">
+        <nav class="container mx-auto px-6 py-3">
+            <div class="flex items-center justify-between">
+                <a href="#hero" class="text-xl font-bold text-[#2c3e50]">Generative AI Explorer</a>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="#what-is-ai" class="nav-link">What is GenAI?</a>
+                    <a href="#models" class="nav-link">Models</a>
+                    <a href="#applications" class="nav-link">Applications</a>
+                    <a href="#comparison" class="nav-link">Comparison</a>
+                    <a href="#horizon" class="nav-link">The Horizon</a>
+                    <a href="#challenges" class="nav-link">Challenges</a>
+                </div>
+                <button id="mobile-menu-button" class="md:hidden focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+            <div id="mobile-menu" class="hidden md:hidden mt-4 space-y-2">
+                <a href="#what-is-ai" class="block py-2 px-4 nav-link">What is GenAI?</a>
+                <a href="#models" class="block py-2 px-4 nav-link">Models</a>
+                <a href="#applications" class="block py-2 px-4 nav-link">Applications</a>
+                <a href="#comparison" class="block py-2 px-4 nav-link">Comparison</a>
+                <a href="#horizon" class="block py-2 px-4 nav-link">The Horizon</a>
+                <a href="#challenges" class="block py-2 px-4 nav-link">Challenges</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-8">
+        <section id="hero" class="text-center min-h-[60vh] flex flex-col justify-center items-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-[#3498db] to-[#e77f67]">The World of Generative AI</h1>
+            <p class="text-lg md:text-xl text-gray-600 max-w-3xl">An interactive journey into the models, applications, and future of AI that creates. This report is transformed into a living document for you to explore.</p>
+        </section>
+
+        <section id="what-is-ai" class="py-16">
+            <h2 class="text-3xl font-bold text-center mb-2">What is Generative AI?</h2>
+            <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">This section introduces the fundamental concepts of Generative AI. It explains how this technology moves beyond simple analysis to actively create new content, marking a significant paradigm shift in artificial intelligence.</p>
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="section-card p-6">
+                    <h3 class="text-2xl font-semibold mb-4 text-[#3498db]">Pattern Creation, Not Just Recognition</h3>
+                    <p class="text-gray-700 leading-relaxed">Generative AI is a branch of AI that doesn't just analyze or act on existing data. Its primary function is to create new, original content—text, images, music, code, and more—that is statistically similar to the data it was trained on. While traditional AI excels at recognizing patterns to classify or predict, Generative AI learns the underlying structure of those patterns to generate novel outputs. This shift from "pattern recognition" to "pattern creation" represents its core capability and transformative potential.</p>
+                </div>
+                <div class="section-card p-6 flex flex-col items-center justify-center space-y-4">
+                     <h3 class="text-xl font-semibold mb-2">The Generative Process</h3>
+                    <div class="flex items-center justify-around w-full">
+                        <div class="text-center">
+                            <div class="text-4xl">📝</div>
+                            <p class="font-semibold mt-2">Input</p>
+                            <p class="text-sm text-gray-500">(Prompt/Data)</p>
+                        </div>
+                        <div class="text-3xl font-light text-gray-400">→</div>
+                        <div class="text-center">
+                            <div class="w-20 h-20 bg-gray-200 rounded-lg flex items-center justify-center text-3xl shadow-inner">🧠</div>
+                            <p class="font-semibold mt-2">GenAI Model</p>
+                             <p class="text-sm text-gray-500">(Learned Patterns)</p>
+                        </div>
+                        <div class="text-3xl font-light text-gray-400">→</div>
+                        <div class="text-center">
+                            <div class="text-4xl">🎨</div>
+                            <p class="font-semibold mt-2">Output</p>
+                             <p class="text-sm text-gray-500">(New Content)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="models" class="py-16">
+            <h2 class="text-3xl font-bold text-center mb-2">The Core Models</h2>
+            <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">Discover the foundational architectures powering Generative AI. Each model has a unique approach to creating content, with distinct strengths and weaknesses. Click the tabs to learn about each one and see how they compare on the chart.</p>
+            <div class="grid lg:grid-cols-5 gap-8">
+                <div class="lg:col-span-2 section-card p-6">
+                    <div id="model-tabs" class="flex flex-col space-y-2 mb-6">
+                         <button data-model="gan" class="tab-button w-full text-left p-3 rounded-lg active">Generative Adversarial Networks (GANs)</button>
+                         <button data-model="vae" class="tab-button w-full text-left p-3 rounded-lg">Variational Autoencoders (VAEs)</button>
+                         <button data-model="transformer" class="tab-button w-full text-left p-3 rounded-lg">Transformer Models</button>
+                         <button data-model="diffusion" class="tab-button w-full text-left p-3 rounded-lg">Diffusion Models</button>
+                    </div>
+                    <div id="model-details"></div>
+                </div>
+                <div class="lg:col-span-3 section-card p-6 flex items-center justify-center">
+                    <div class="chart-container">
+                        <canvas id="modelComparisonChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="applications" class="py-16">
+            <h2 class="text-3xl font-bold text-center mb-2">Applications Across Industries</h2>
+            <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">Generative AI is not a theoretical concept; it's a general-purpose technology transforming sectors worldwide. This section provides an overview of its impact, from creative arts to life sciences. The chart highlights key areas of implementation focus.</p>
+             <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="section-card p-6">
+                    <h3 class="text-xl font-semibold mb-4">Top Implementation Priorities</h3>
+                    <div class="chart-container h-80 max-h-[45vh]">
+                        <canvas id="applicationsChart"></canvas>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div id="app-card-content" class="app-card section-card p-4 text-center cursor-pointer bg-blue-100">
+                        <div class="text-3xl mb-2">🎨</div>
+                        <h4 class="font-semibold">Content Creation</h4>
+                    </div>
+                     <div id="app-card-healthcare" class="app-card section-card p-4 text-center cursor-pointer bg-green-100">
+                        <div class="text-3xl mb-2">❤️</div>
+                        <h4 class="font-semibold">Healthcare</h4>
+                    </div>
+                     <div id="app-card-finance" class="app-card section-card p-4 text-center cursor-pointer bg-yellow-100">
+                        <div class="text-3xl mb-2">💰</div>
+                        <h4 class="font-semibold">Financial Services</h4>
+                    </div>
+                     <div id="app-card-support" class="app-card section-card p-4 text-center cursor-pointer bg-purple-100">
+                        <div class="text-3xl mb-2">💬</div>
+                        <h4 class="font-semibold">Customer Service</h4>
+                    </div>
+                </div>
+            </div>
+             <div id="app-details-display" class="mt-8 section-card p-6 hidden"></div>
+        </section>
+
+        <section id="comparison" class="py-16">
+            <h2 class="text-3xl font-bold text-center mb-2">Generative vs. Traditional AI</h2>
+            <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">Understanding the distinction between Generative and Traditional (or Discriminative) AI is key. While they serve different purposes, they are often most powerful when used together. This section breaks down their core differences and synergistic potential.</p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="section-card p-6">
+                    <h3 class="text-xl font-semibold mb-4 text-center">Traditional (Discriminative) AI</h3>
+                    <p class="text-gray-700">Focuses on **analysis and prediction**. It learns to distinguish between different types of data. Think of it as answering a question from a set of options (e.g., 'Is this a cat or a dog?').</p>
+                    <ul class="mt-4 space-y-2 list-disc list-inside">
+                        <li>Classification</li>
+                        <li>Prediction</li>
+                        <li>Pattern Recognition</li>
+                    </ul>
+                </div>
+                <div class="section-card p-6 lg:col-span-1">
+                    <h3 class="text-xl font-semibold mb-4 text-center">Generative AI</h3>
+                    <p class="text-gray-700">Focuses on **creation and synthesis**. It learns the underlying patterns of data to generate something new. It's like being asked to draw a picture of a cat that has never existed before.</p>
+                     <ul class="mt-4 space-y-2 list-disc list-inside">
+                        <li>Creation</li>
+                        <li>Innovation</li>
+                        <li>Data Augmentation</li>
+                    </ul>
+                </div>
+                 <div class="section-card p-6 flex flex-col items-center justify-center md:col-span-2 lg:col-span-1">
+                     <h3 class="text-xl font-semibold mb-4 text-center">Core Function</h3>
+                    <div class="chart-container h-64 max-h-[30vh]">
+                        <canvas id="comparisonChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="horizon" class="py-16">
+            <h2 class="text-3xl font-bold text-center mb-2">The Horizon: What's Next?</h2>
+            <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">The field of Generative AI is evolving at a breathtaking pace. This section explores the key trends shaping its future, from the convergence of different data types to the push for more sustainable and collaborative systems.</p>
+            <div class="relative wrap overflow-hidden p-10 h-full">
+                <div class="border-2-2 absolute border-opacity-20 border-gray-700 h-full border" style="left: 50%"></div>
+                
+                <div class="mb-8 flex justify-between items-center w-full right-timeline">
+                    <div class="order-1 w-5/12"></div>
+                    <div class="z-20 flex items-center order-1 bg-gray-800 shadow-xl w-8 h-8 rounded-full">
+                        <h1 class="mx-auto font-semibold text-lg text-white">1</h1>
+                    </div>
+                    <div class="order-1 bg-white rounded-lg shadow-xl w-5/12 px-6 py-4 section-card">
+                        <h3 class="font-bold text-gray-800 text-xl">Multimodal AI</h3>
+                        <p class="text-sm leading-snug tracking-wide text-gray-900 text-opacity-100">AI that understands and generates content across text, images, audio, and video simultaneously, leading to richer, more integrated experiences.</p>
+                    </div>
+                </div>
+
+                <div class="mb-8 flex justify-between flex-row-reverse items-center w-full left-timeline">
+                    <div class="order-1 w-5/12"></div>
+                    <div class="z-20 flex items-center order-1 bg-gray-800 shadow-xl w-8 h-8 rounded-full">
+                        <h1 class="mx-auto text-white font-semibold text-lg">2</h1>
+                    </div>
+                    <div class="order-1 bg-white rounded-lg shadow-xl w-5/12 px-6 py-4 section-card">
+                        <h3 class="font-bold text-gray-800 text-xl">Democratization & Open Source</h3>
+                        <p class="text-sm leading-snug tracking-wide text-gray-900 text-opacity-100">Tools become more accessible through open-source initiatives and AI-as-a-service platforms, fostering wider innovation.</p>
+                    </div>
+                </div>
+                
+                <div class="mb-8 flex justify-between items-center w-full right-timeline">
+                    <div class="order-1 w-5/12"></div>
+                    <div class="z-20 flex items-center order-1 bg-gray-800 shadow-xl w-8 h-8 rounded-full">
+                        <h1 class="mx-auto font-semibold text-lg text-white">3</h1>
+                    </div>
+                    <div class="order-1 bg-white rounded-lg shadow-xl w-5/12 px-6 py-4 section-card">
+                        <h3 class="font-bold text-gray-800 text-xl">Sustainable & Efficient AI</h3>
+                        <p class="text-sm leading-snug tracking-wide text-gray-900 text-opacity-100">A growing focus on reducing the energy footprint of large models through optimized algorithms and hardware.</p>
+                    </div>
+                </div>
+
+                <div class="mb-8 flex justify-between flex-row-reverse items-center w-full left-timeline">
+                    <div class="order-1 w-5/12"></div>
+                    <div class="z-20 flex items-center order-1 bg-gray-800 shadow-xl w-8 h-8 rounded-full">
+                        <h1 class="mx-auto text-white font-semibold text-lg">4</h1>
+                    </div>
+                    <div class="order-1 bg-white rounded-lg shadow-xl w-5/12 px-6 py-4 section-card">
+                        <h3 class="font-bold text-gray-800 text-xl">Human-AI Collaboration</h3>
+                        <p class="text-sm leading-snug tracking-wide text-gray-900 text-opacity-100">AI evolves from a tool to a creative partner, augmenting human capabilities in art, design, and science.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="challenges" class="py-16">
+            <h2 class="text-3xl font-bold text-center mb-2">Challenges & Ethical Considerations</h2>
+            <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">The power of Generative AI comes with significant responsibility. This section explores the critical challenges and ethical dilemmas we face, from biased outputs to intellectual property issues. Click each card to reveal key mitigation strategies.</p>
+            <div class="grid md:grid-cols-2 gap-8">
+                 <div class="section-card p-6">
+                    <h3 class="text-xl font-semibold mb-4 text-center">Interconnected Risks</h3>
+                    <div class="chart-container h-96 max-h-[50vh]">
+                        <canvas id="challengesChart"></canvas>
+                    </div>
+                 </div>
+                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="flip-card h-48 rounded-lg cursor-pointer">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front bg-[#e77f67] text-white">
+                                <h4 class="text-lg font-bold">Hallucinations</h4>
+                                <p class="text-sm">Generating false info</p>
+                            </div>
+                            <div class="flip-card-back bg-gray-700 text-white">
+                                <h5 class="font-semibold mb-1">Mitigation</h5>
+                                <p class="text-xs text-center">Use high-quality data, ground models in factual sources, and implement human-in-the-loop validation.</p>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="flip-card h-48 rounded-lg cursor-pointer">
+                        <div class="flip-card-inner">
+                             <div class="flip-card-front bg-[#3498db] text-white">
+                                <h4 class="text-lg font-bold">Bias & Fairness</h4>
+                                <p class="text-sm">Amplifying societal biases</p>
+                            </div>
+                            <div class="flip-card-back bg-gray-700 text-white">
+                                <h5 class="font-semibold mb-1">Mitigation</h5>
+                                <p class="text-xs text-center">Audit training data, use diverse review teams, and implement bias assessment tools.</p>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="flip-card h-48 rounded-lg cursor-pointer">
+                        <div class="flip-card-inner">
+                             <div class="flip-card-front bg-green-500 text-white">
+                                <h4 class="text-lg font-bold">IP & Copyright</h4>
+                                <p class="text-sm">Unclear ownership</p>
+                            </div>
+                           <div class="flip-card-back bg-gray-700 text-white">
+                                 <h5 class="font-semibold mb-1">Mitigation</h5>
+                                <p class="text-xs text-center">Respect copyright, ensure fair use, develop clear usage policies, and stay updated on legal precedents.</p>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="flip-card h-48 rounded-lg cursor-pointer">
+                        <div class="flip-card-inner">
+                           <div class="flip-card-front bg-purple-500 text-white">
+                                <h4 class="text-lg font-bold">Misinformation</h4>
+                                <p class="text-sm">Creating deepfakes</p>
+                            </div>
+                            <div class="flip-card-back bg-gray-700 text-white">
+                                 <h5 class="font-semibold mb-1">Mitigation</h5>
+                                <p class="text-xs text-center">Develop robust verification and watermarking methods, promote digital literacy, and verify sources.</p>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="bg-gray-800 text-white text-center py-6 mt-16">
+        <p>&copy; 2024 Generative AI Interactive Report. All information is based on the source document.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (!mobileMenu.classList.contains('hidden')) {
+                         mobileMenu.classList.add('hidden');
+                    }
+                })
+            })
+
+            const sections = document.querySelectorAll('section');
+            const navLi = document.querySelectorAll('nav .nav-link');
+
+            window.addEventListener('scroll', ()=> {
+                let current = '';
+                sections.forEach( section => {
+                    const sectionTop = section.offsetTop;
+                    if(pageYOffset >= sectionTop - 100){
+                        current = section.getAttribute('id');
+                    }
+                })
+
+                navLi.forEach( a => {
+                    a.classList.remove('active');
+                    if(a.getAttribute('href') == `#${current}`){
+                        a.classList.add('active');
+                    }
+                })
+            });
+
+            const modelData = {
+                gan: {
+                    name: 'Generative Adversarial Networks (GANs)',
+                    description: 'GANs use two competing neural networks: a Generator that creates content and a Discriminator that judges its authenticity. This adversarial process results in highly realistic outputs.',
+                    strengths: ['Sharp, realistic outputs', 'Excellent for image synthesis'],
+                    weaknesses: ['Training can be unstable', 'Risk of "mode collapse"'],
+                    chartData: [8, 3, 7, 5] 
+                },
+                vae: {
+                    name: 'Variational Autoencoders (VAEs)',
+                    description: 'VAEs encode input data into a probabilistic latent space and then decode it back. They are great for creating smooth transitions and interpolations between data points.',
+                    strengths: ['Smooth latent space', 'Good for anomaly detection'],
+                    weaknesses: ['Outputs can be blurry', 'Less sharp than GANs'],
+                    chartData: [6, 8, 6, 8] 
+                },
+                transformer: {
+                    name: 'Transformer Models',
+                    description: 'The backbone of Large Language Models (LLMs). Transformers process entire sequences of data at once using a "self-attention" mechanism, allowing them to capture long-range dependencies.',
+                    strengths: ['Excellent for sequential data (text)', 'Highly scalable'],
+                    weaknesses: ['Computationally intensive', 'Can "hallucinate" facts'],
+                    chartData: [7, 7, 5, 6] 
+                },
+                diffusion: {
+                    name: 'Diffusion Models',
+                    description: 'These models work by adding noise to data and then learning to reverse the process. This denoising technique produces state-of-the-art, high-fidelity images and audio.',
+                    strengths: ['State-of-the-art quality', 'High output diversity'],
+                    weaknesses: ['Slower generation speed', 'High training cost'],
+                    chartData: [9, 9, 3, 7] 
+                }
+            };
+            
+            const modelDetailsContainer = document.getElementById('model-details');
+            const modelTabs = document.getElementById('model-tabs');
+            
+            function updateModelDetails(modelKey) {
+                const data = modelData[modelKey];
+                modelDetailsContainer.innerHTML = `
+                    <h3 class="text-2xl font-semibold mb-3 text-[#3498db]">${data.name}</h3>
+                    <p class="text-gray-600 mb-4">${data.description}</p>
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <h4 class="font-semibold mb-2">Strengths</h4>
+                            <ul class="list-disc list-inside text-green-600 space-y-1">
+                                ${data.strengths.map(s => `<li>${s}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">Weaknesses</h4>
+                            <ul class="list-disc list-inside text-red-600 space-y-1">
+                                ${data.weaknesses.map(w => `<li>${w}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            }
+
+            modelTabs.addEventListener('click', (e) => {
+                if(e.target.tagName === 'BUTTON') {
+                    const modelKey = e.target.dataset.model;
+                    modelTabs.querySelector('.active').classList.remove('active');
+                    e.target.classList.add('active');
+                    updateModelDetails(modelKey);
+                    updateModelChart(modelKey);
+                }
+            });
+
+            const modelChartCtx = document.getElementById('modelComparisonChart').getContext('2d');
+            let modelComparisonChart = new Chart(modelChartCtx, {
+                type: 'radar',
+                data: {
+                    labels: ['Output Quality', 'Training Stability', 'Generation Speed', 'Controllability'],
+                    datasets: []
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: 'rgba(0, 0, 0, 0.1)' },
+                            grid: { color: 'rgba(0, 0, 0, 0.1)' },
+                            pointLabels: { font: { size: 12 } },
+                            suggestedMin: 0,
+                            suggestedMax: 10
+                        }
+                    },
+                    plugins: {
+                        legend: { position: 'top' }
+                    }
+                }
+            });
+
+            function updateModelChart(modelKey) {
+                const data = modelData[modelKey];
+                modelComparisonChart.data.datasets = [{
+                    label: data.name,
+                    data: data.chartData,
+                    backgroundColor: 'rgba(52, 152, 219, 0.2)',
+                    borderColor: 'rgba(52, 152, 219, 1)',
+                    pointBackgroundColor: 'rgba(52, 152, 219, 1)',
+                    borderWidth: 2
+                }];
+                modelComparisonChart.update();
+            }
+
+            updateModelDetails('gan');
+            updateModelChart('gan');
+            
+            const appData = {
+                content: {
+                    title: "Content Creation",
+                    details: "Generative AI is revolutionizing creative fields. It can write articles, emails, and poetry; design graphics and logos; compose music; and even generate video and software code. This automates workflows and empowers creators to focus on high-level strategy.",
+                    icon: "🎨"
+                },
+                healthcare: {
+                    title: "Healthcare & Drug Discovery",
+                    details: "In healthcare, AI assists in summarizing patient records, analyzing medical images (X-rays, MRIs), and accelerating drug discovery by modeling new molecular structures. Virtual assistants also improve patient engagement.",
+                    icon: "❤️"
+                },
+                finance: {
+                    title: "Financial Services",
+                    details: "AI analyzes market trends, generates financial reports, and automates forecasting. It's a powerful tool for fraud detection and risk management, quickly identifying anomalies in vast datasets.",
+                    icon: "💰"
+                },
+                support: {
+                    title: "Customer Support",
+                    details: "Customer service is a top use case. AI-powered chatbots provide 24/7 support, answer complex queries, analyze customer sentiment, and summarize support tickets, improving efficiency and user experience.",
+                    icon: "💬"
+                }
+            };
+
+            const appDetailsDisplay = document.getElementById('app-details-display');
+            const appCards = document.querySelectorAll('.app-card');
+            
+            appCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const appId = card.id.replace('app-card-', '');
+                    const data = appData[appId];
+                    appDetailsDisplay.innerHTML = `
+                        <h4 class="text-xl font-bold mb-2 flex items-center"><span class="text-2xl mr-3">${data.icon}</span> ${data.title}</h4>
+                        <p class="text-gray-700">${data.details}</p>
+                    `;
+                    appDetailsDisplay.classList.remove('hidden');
+                });
+            });
+
+            const applicationsChartCtx = document.getElementById('applicationsChart').getContext('2d');
+            new Chart(applicationsChartCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Customer Service', 'Content Creation', 'Fraud Detection', 'Drug Discovery'],
+                    datasets: [{
+                        label: 'CEO Implementation Priority',
+                        data: [85, 78, 72, 65],
+                        backgroundColor: ['#c4b5fd', '#a7f3d0', '#fde047', '#fed7aa'],
+                        borderColor: ['#8b5cf6', '#10b981', '#f59e0b', '#f97316'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { suggestedMax: 100, ticks: { callback: value => value + "%" } },
+                        y: { grid: { display: false } }
+                    }
+                }
+            });
+
+            const comparisonChartCtx = document.getElementById('comparisonChart').getContext('2d');
+            new Chart(comparisonChartCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Pattern Recognition (Traditional)', 'Pattern Creation (Generative)'],
+                    datasets: [{
+                        data: [60, 40],
+                        backgroundColor: ['#e77f67', '#3498db'],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+            
+            const challengesChartCtx = document.getElementById('challengesChart').getContext('2d');
+            new Chart(challengesChartCtx, {
+                type: 'bubble',
+                data: {
+                    datasets: [
+                        { label: 'Hallucinations', data: [{x: 20, y: 30, r: 25}], backgroundColor: '#e77f67' },
+                        { label: 'Bias & Fairness', data: [{x: 40, y: 60, r: 30}], backgroundColor: '#3498db' },
+                        { label: 'Misinformation', data: [{x: 70, y: 40, r: 28}], backgroundColor: '#9b59b6' },
+                        { label: 'IP & Copyright', data: [{x: 55, y: 15, r: 22}], backgroundColor: '#2ecc71' },
+                        { label: 'Privacy Risks', data: [{x: 25, y: 80, r: 18}], backgroundColor: '#f1c40f' }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'top' } },
+                    scales: {
+                        x: { display: false, min: 0, max: 100 },
+                        y: { display: false, min: 0, max: 100 }
+                    }
+                }
+            });
+            
+            const flipCards = document.querySelectorAll('.flip-card');
+            flipCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    card.classList.toggle('flipped');
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>
